@@ -3,14 +3,40 @@
 #
 #  Data Area - allocate and initialize variables
 .data
-	# TODO: Write your string definitions here
+    prompt: .asciiz "Enter an integer: "
 
 #Text Area (i.e. instructions)
 .text
 main:
+    li $v0 4
+    la $a0 prompt
+    syscall
 
-	# TODO: Write your code here
+    li $v0 5
+    syscall
+    move $t0 $v0
+
+    li $t1 1
+    and $t2 $t1 $t0
+
+    beq $t2 $t1, odd
+
+even:
+    li $t3 3
+    mult $t0 $t3
+    mflo $t4
+    j print
+odd:
+    li $t3 2
+    mult $t0 $t3
+    mflo $t4
+
+print: 
+    li $v0 1
+    move $a0 $t4
+    syscall
+    j exit
 
 exit:
-	# Exit SPIM: Write your code here!
-
+    li $v0 10
+    syscall
